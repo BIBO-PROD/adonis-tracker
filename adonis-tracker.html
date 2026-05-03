@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
+<title>Adonis Protocol</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --purple: #9b5de5;
+    --purple-dim: #5a2d8a;
+    --purple-bg: #1a0a2e;
+    --green: #00f5a0;
+    --amber: #f5a623;
+    --red: #ff4444;
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #161616;
+    --border: #1e1e1e;
+    --border2: #2a2a2a;
+    --text: #ffffff;
+    --text2: #888888;
+    --text3: #444444;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .app {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+  }
+
+  /* TOPBAR */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    color: var(--purple);
+    text-transform: uppercase;
+  }
+
+  .date-pill {
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 1px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  /* HERO RING */
+  .hero {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .ring-wrap {
+    position: relative;
+    width: 110px;
+    height: 110px;
+  }
+
+  .ring-wrap svg {
+    transform: rotate(-90deg);
+    width: 110px;
+    height: 110px;
+  }
+
+  .ring-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .ring-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--purple);
+    line-height: 1;
+  }
+
+  .ring-lbl {
+    font-size: 9px;
+    color: var(--text3);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+
+  .hero-info {}
+
+  .rank-chip {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--purple);
+    background: var(--purple-bg);
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+
+  .rank-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .rank-next {
+    font-size: 11px;
+    color: var(--text3);
+    margin-bottom: 8px;
+  }
+
+  .rank-next span { color: var(--purple); }
+
+  .prog-bar {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+
+  .prog-fill {
+    height: 100%;
+    background: var(--purple);
+    border-radius: 2px;
+    transition: width 0.6s ease;
+  }
+
+  .week-lbl {
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 1px;
+  }
+
+  /* STAT ROW */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .stat-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 5px;
+  }
+
+  .stat-num.g { color: var(--green); }
+  .stat-num.p { color: var(--purple); }
+  .stat-num.a { color: var(--amber); }
+
+  .stat-lbl {
+    font-size: 9px;
+    color: var(--text3);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  /* SECTION HEADER */
+  .sec-hd {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin: 20px 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .sec-hd::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* VIRTUE LIST */
+  .virtue-list { display: flex; flex-direction: column; gap: 6px; }
+
+  .v-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .v-item:hover { border-color: var(--border2); }
+  .v-item:active { background: var(--bg3); }
+
+  .v-item.done { border-color: rgba(155, 93, 229, 0.25); }
+
+  .v-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border2);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: transparent;
+    background: var(--bg);
+    transition: all 0.15s;
+  }
+
+  .v-item.done .v-dot {
+    background: var(--purple);
+    border-color: var(--purple);
+    color: #fff;
+  }
+
+  .v-text {
+    flex: 1;
+    font-size: 13px;
+    color: var(--text2);
+    font-weight: 400;
+    transition: color 0.15s;
+  }
+
+  .v-item.done .v-text {
+    color: var(--text3);
+    text-decoration: line-through;
+  }
+
+  .v-pts {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--purple);
+  }
+
+  /* DAY TABS */
+  .day-tabs {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  .dtab {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    color: var(--text3);
+    background: var(--bg2);
+    letter-spacing: 1px;
+    transition: all 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .dtab:hover { border-color: var(--border2); color: var(--text2); }
+  .dtab.active { background: var(--purple); border-color: var(--purple); color: #fff; }
+  .dtab.today-marker { border-color: var(--purple-dim); }
+
+  /* EXERCISE LIST */
+  .ex-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .ex-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--text3);
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    text-transform: uppercase;
+  }
+
+  .ex-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.1s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .ex-item:last-child { border-bottom: none; }
+  .ex-item:hover { background: var(--bg3); }
+  .ex-item.xdone { background: rgba(0,0,0,0.3); }
+
+  .ex-box {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1px solid var(--border2);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: transparent;
+    background: var(--bg);
+    transition: all 0.15s;
+  }
+
+  .ex-item.xdone .ex-box {
+    background: var(--purple);
+    border-color: var(--purple);
+    color: #fff;
+  }
+
+  .ex-name {
+    flex: 1;
+    font-size: 13px;
+    color: var(--text2);
+    transition: color 0.15s;
+  }
+
+  .ex-item.xdone .ex-name {
+    color: var(--text3);
+    text-decoration: line-through;
+  }
+
+  .ex-set {
+    font-size: 11px;
+    color: var(--text3);
+    font-weight: 500;
+    font-family: 'Syne', sans-serif;
+  }
+
+  .ex-week-note {
+    font-size: 10px;
+    color: rgba(155,93,229,0.4);
+    font-style: italic;
+    padding: 8px 14px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  /* SINS */
+  .sin-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .sin-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .sin-item:hover { border-color: #ff444440; }
+  .sin-item.sinned { border-color: rgba(255,68,68,0.3); background: #1a0808; }
+
+  .sin-name { font-size: 12px; color: var(--text2); margin-bottom: 4px; }
+  .sin-item.sinned .sin-name { color: var(--red); }
+  .sin-pts { font-size: 11px; font-weight: 700; color: var(--red); }
+
+  /* HISTORY */
+  .hist-grid {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .hday {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    color: var(--text3);
+    font-weight: 600;
+    cursor: default;
+    transition: all 0.15s;
+  }
+
+  .hday.s { background: var(--purple); border-color: var(--purple); color: #fff; }
+  .hday.m { background: var(--purple-dim); border-color: var(--purple-dim); color: #ccc; }
+  .hday.w { background: #12091e; border-color: #1e1030; color: #4a3a5a; }
+
+  /* ACTIONS */
+  .action-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    margin-top: 24px;
+  }
+
+  .act-btn {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text3);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 11px 8px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    transition: all 0.15s;
+    text-align: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .act-btn:hover { border-color: var(--purple); color: var(--purple); }
+  .act-btn.danger:hover { border-color: var(--red); color: var(--red); }
+
+  /* IMPORT AREA */
+  .import-wrap {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    margin-top: 8px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .import-wrap.open { display: flex; }
+
+  .import-wrap textarea {
+    background: var(--bg);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    padding: 10px;
+    width: 100%;
+    height: 90px;
+    resize: none;
+    outline: none;
+  }
+
+  .import-wrap textarea::placeholder { color: var(--text3); }
+  .import-wrap textarea:focus { border-color: var(--purple); }
+
+  .import-btns { display: flex; gap: 8px; }
+
+  .imp-confirm {
+    background: var(--purple);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 9px 18px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .imp-cancel {
+    background: none;
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    color: var(--text3);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 9px 18px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.15s;
+  }
+
+  .imp-cancel:hover { border-color: var(--red); color: var(--red); }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--bg2);
+    border: 1px solid var(--purple);
+    color: var(--purple);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px 22px;
+    border-radius: 30px;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+    z-index: 999;
+    white-space: nowrap;
+    letter-spacing: 1px;
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.neg { border-color: var(--red); color: var(--red); }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    margin-top: 32px;
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 1px;
+  }
+
+  /* MOBILE SCROLL */
+  @media (max-width: 480px) {
+    .app { padding: 16px 12px 60px; }
+    .hero { grid-template-columns: 100px 1fr; gap: 14px; }
+    .ring-num { font-size: 24px; }
+    .rank-name { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="topbar">
+    <div class="logo">Adonis Protocol</div>
+    <div class="date-pill" id="date-str">—</div>
+  </div>
+
+  <div class="hero">
+    <div class="ring-wrap">
+      <svg viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="55" cy="55" r="46" fill="none" stroke="#1e1e1e" stroke-width="9"/>
+        <circle cx="55" cy="55" r="46" fill="none" stroke="#9b5de5" stroke-width="9"
+          stroke-linecap="round"
+          stroke-dasharray="289"
+          id="ring-dash"
+          stroke-dashoffset="289"
+          style="transition: stroke-dashoffset 0.6s ease;"/>
+      </svg>
+      <div class="ring-center">
+        <div class="ring-num" id="ring-num">0</div>
+        <div class="ring-lbl">Aura</div>
+      </div>
+    </div>
+    <div class="hero-info">
+      <div class="rank-chip" id="rank-chip">Rank</div>
+      <div class="rank-name" id="rank-name">Joffrey</div>
+      <div class="rank-next" id="rank-next">— to <span>Squire</span></div>
+      <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+      <div class="week-lbl" id="week-lbl">Week 1 · Day 1</div>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num g" id="streak-n">0</div>
+      <div class="stat-lbl">Streak</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num p" id="week-n">0</div>
+      <div class="stat-lbl">Week pts</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num a" id="best-n">0</div>
+      <div class="stat-lbl">Best streak</div>
+    </div>
+  </div>
+
+  <div class="sec-hd">Daily virtues</div>
+  <div class="virtue-list" id="virtue-list"></div>
+
+  <div class="sec-hd">Training</div>
+  <div class="day-tabs" id="day-tabs"></div>
+  <div class="ex-card" id="ex-card"></div>
+
+  <div class="sec-hd">Sins</div>
+  <div class="sin-grid" id="sin-grid"></div>
+
+  <div class="sec-hd">30-day chronicle</div>
+  <div class="hist-grid" id="hist-grid"></div>
+
+  <div class="action-row">
+    <button class="act-btn" onclick="exportData()">Export</button>
+    <button class="act-btn" onclick="toggleImport()">Import</button>
+    <button class="act-btn danger" onclick="resetDay()">Reset day</button>
+  </div>
+
+  <div class="import-wrap" id="import-wrap">
+    <textarea id="import-txt" placeholder="Paste your exported JSON backup here..."></textarea>
+    <div class="import-btns">
+      <button class="imp-confirm" onclick="doImport()">Import</button>
+      <button class="imp-cancel" onclick="toggleImport()">Cancel</button>
+    </div>
+  </div>
+
+  <div class="footer">Joffrey → Adonis &nbsp;·&nbsp; Stay consistent</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SK = 'adonis_v3_standalone';
+
+const RANKS = [
+  { n: 'Joffrey',  min: 0,    max: 100  },
+  { n: 'Squire',   min: 100,  max: 250  },
+  { n: 'Knight',   min: 250,  max: 500  },
+  { n: 'Lord',     min: 500,  max: 900  },
+  { n: 'King',     min: 900,  max: 1500 },
+  { n: 'Adonis',   min: 1500, max: 99999 }
+];
+
+const VIRTUES = [
+  { id: 'workout', name: 'Complete workout',       pts: 30 },
+  { id: 'walk',    name: 'Walkpad 30 min fasted',  pts: 25 },
+  { id: 'sun',     name: '15-20 min sunlight',     pts: 20 },
+  { id: 'wake',    name: 'Wake by 9AM',             pts: 15 },
+  { id: 'work',    name: '3+ hours deep work',      pts: 15 },
+  { id: 'study',   name: 'Study or research',       pts: 10 },
+  { id: 'photo',   name: 'Body photo taken',        pts: 10 }
+];
+
+const SINS = [
+  { id: 'fap',       name: 'Fapped',           pts: -40 },
+  { id: 'smoke',     name: 'Smoked',           pts: -25 },
+  { id: 'miss_w',    name: 'Missed workout',   pts: -30 },
+  { id: 'miss_work', name: 'Under 3h work',    pts: -15 }
+];
+
+const WD = {
+  1: { t: 'Chest + Shoulders + Abs', ex: [
+    ['Incline pushups on chair','4x15'],
+    ['Dumbbell chest fly floor','4x12'],
+    ['Decline pushups feet on chair','3x12'],
+    ['Resistance band chest press','3x15'],
+    ['Dumbbell shoulder press','4x12'],
+    ['Resistance band lateral raise','3x15'],
+    ['Leg raises','4x15'],
+    ['Bicycle crunches','3x20']
+  ]},
+  2: { t: 'Back + Biceps + Abs', ex: [
+    ['Edge pullups','5x max'],
+    ['Resistance band rows','4x15'],
+    ['Dumbbell bent over row','4x12'],
+    ['Resistance band face pulls','3x15'],
+    ['Dumbbell curl','3x12'],
+    ['Resistance band hammer curl','3x12'],
+    ['Hollow body hold','3x30s'],
+    ['Reverse crunches','4x15']
+  ]},
+  3: { t: 'Cricket — active recovery', ex: [
+    ['Play cricket 1-2 hours','active'],
+    ['Light stretching post game','10 min']
+  ]},
+  4: { t: 'Chest + Triceps + Abs', ex: [
+    ['Wide pushups','4x15'],
+    ['Resistance band chest fly','4x15'],
+    ['Dumbbell floor press','4x12'],
+    ['Diamond pushups','3x12'],
+    ['Chair dips','4x12'],
+    ['Resistance band pushdown','3x15'],
+    ['Plank','3x45s'],
+    ['Dead bug','3x10 each']
+  ]},
+  5: { t: 'Back + Legs + Shoulders', ex: [
+    ['Resistance band lat pulldown','4x12'],
+    ['Dumbbell bent over row','4x12'],
+    ['Superman holds','3x12'],
+    ['Resistance band pull apart','3x20'],
+    ['Goblet squat dumbbell','4x15'],
+    ['Reverse lunges','3x12 each'],
+    ['Single leg glute bridge','3x12 each'],
+    ['Resistance band upright row','3x12']
+  ]},
+  6: { t: 'Cricket — active recovery', ex: [
+    ['Play cricket 1-2 hours','active'],
+    ['Light stretching post game','10 min']
+  ]},
+  7: { t: 'Rest & Recover', ex: [
+    ['Walk 20+ minutes','easy pace'],
+    ['Mobility / stretching','15 min']
+  ]}
+};
+
+function todayKey() { return new Date().toISOString().slice(0, 10); }
+
+function load() {
+  try {
+    const r = localStorage.getItem(SK);
+    if (r) return JSON.parse(r);
+  } catch(e) {}
+  return { totalAura: 0, bestStreak: 0, startDate: todayKey(), days: {} };
+}
+
+function save(s) {
+  try { localStorage.setItem(SK, JSON.stringify(s)); } catch(e) {}
+}
+
+function getDay(s, k) {
+  if (!s.days[k]) s.days[k] = { v: {}, sins: {}, ex: {}, aura: 0 };
+  return s.days[k];
+}
+
+function getRank(a) {
+  for (let i = RANKS.length - 1; i >= 0; i--) if (a >= RANKS[i].min) return RANKS[i];
+  return RANKS[0];
+}
+
+function getNext(a) {
+  for (let i = 0; i < RANKS.length; i++) if (a < RANKS[i].max) return RANKS[i];
+  return RANKS[RANKS.length - 1];
+}
+
+function calcStreak(s) {
+  let streak = 0, d = new Date();
+  for (let i = 0; i < 90; i++) {
+    const k = d.toISOString().slice(0, 10);
+    const day = s.days[k];
+    if (!day || Object.values(day.v).filter(Boolean).length < 3) break;
+    streak++;
+    d.setDate(d.getDate() - 1);
+  }
+  return streak;
+}
+
+function calcWeek(s) {
+  let t = 0;
+  const d = new Date();
+  for (let i = 0; i < 7; i++) {
+    const k = d.toISOString().slice(0, 10);
+    if (s.days[k]) t += (s.days[k].aura || 0);
+    d.setDate(d.getDate() - 1);
+  }
+  return Math.max(0, t);
+}
+
+function recalc(s) {
+  let t = 0;
+  Object.values(s.days).forEach(d => { t += (d.aura || 0); });
+  s.totalAura = Math.max(0, t);
+}
+
+function getTrainingDay(s) {
+  const diff = Math.floor((new Date() - new Date(s.startDate)) / 86400000);
+  return (diff % 7) + 1;
+}
+
+function getWeekNum(s) {
+  const diff = Math.floor((new Date() - new Date(s.startDate)) / 86400000);
+  return Math.floor(diff / 7) + 1;
+}
+
+let toastTimer = null;
+function toast(msg, neg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show' + (neg ? ' neg' : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
+}
+
+let S = load();
+let selDay = getTrainingDay(S);
+
+function render() {
+  const today = todayKey();
+  const dd = getDay(S, today);
+  const aura = S.totalAura;
+  const rank = getRank(aura);
+  const next = getNext(aura);
+  const pct = rank.min === next.min ? 100 : Math.min(100, Math.round(((aura - rank.min) / (next.max - rank.min)) * 100));
+  const circumference = 289;
+  const offset = Math.round(circumference * (1 - pct / 100));
+
+  document.getElementById('date-str').textContent = new Date().toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+  document.getElementById('ring-num').textContent = aura;
+  document.getElementById('ring-dash').setAttribute('stroke-dashoffset', offset);
+  document.getElementById('rank-chip').textContent = rank.n;
+  document.getElementById('rank-name').textContent = rank.n === 'Adonis' ? 'Adonis Achieved' : rank.n;
+  document.getElementById('rank-next').innerHTML = aura >= 1500 ? 'Peak form. Maintain.' : `${next.max - aura} pts to <span>${next.n}</span>`;
+  document.getElementById('prog-fill').style.width = pct + '%';
+
+  const wk = Math.min(getWeekNum(S), 8);
+  const td = getTrainingDay(S);
+  document.getElementById('week-lbl').textContent = `Week ${wk} · Training day ${td}`;
+
+  const streak = calcStreak(S);
+  S.bestStreak = Math.max(S.bestStreak || 0, streak);
+  document.getElementById('streak-n').textContent = streak;
+  document.getElementById('week-n').textContent = calcWeek(S);
+  document.getElementById('best-n').textContent = S.bestStreak;
+
+  // Virtues
+  const vl = document.getElementById('virtue-list');
+  vl.innerHTML = '';
+  VIRTUES.forEach(v => {
+    const done = !!dd.v[v.id];
+    const el = document.createElement('div');
+    el.className = 'v-item' + (done ? ' done' : '');
+    el.innerHTML = `<div class="v-dot">${done ? '✓' : ''}</div><div class="v-text">${v.name}</div><div class="v-pts">+${v.pts}</div>`;
+    el.onclick = () => {
+      if (done) { dd.v[v.id] = false; dd.aura -= v.pts; toast('-' + v.pts + ' aura', true); }
+      else { dd.v[v.id] = true; dd.aura += v.pts; toast('+' + v.pts + ' aura — glory grows'); }
+      recalc(S); save(S); render();
+    };
+    vl.appendChild(el);
+  });
+
+  // Day tabs
+  const tabs = document.getElementById('day-tabs');
+  tabs.innerHTML = '';
+  for (let d = 1; d <= 7; d++) {
+    const tab = document.createElement('div');
+    tab.className = 'dtab' + (d === selDay ? ' active' : '') + (d === td ? ' today-marker' : '');
+    tab.textContent = 'D' + d;
+    tab.title = WD[d].t;
+    tab.onclick = () => { selDay = d; render(); };
+    tabs.appendChild(tab);
+  }
+
+  // Exercises
+  const card = document.getElementById('ex-card');
+  card.innerHTML = '';
+  const prog = WD[selDay];
+  const titleEl = document.createElement('div');
+  titleEl.className = 'ex-title';
+  titleEl.textContent = prog.t;
+  card.appendChild(titleEl);
+
+  prog.ex.forEach(([name, sets], i) => {
+    const exId = 'd' + selDay + '_' + i;
+    const done = !!dd.ex[exId];
+    const el = document.createElement('div');
+    el.className = 'ex-item' + (done ? ' xdone' : '');
+    el.innerHTML = `<div class="ex-box">${done ? '✓' : ''}</div><div class="ex-name">${name}</div><div class="ex-set">${sets}</div>`;
+    el.onclick = () => { dd.ex[exId] = !done; save(S); render(); };
+    card.appendChild(el);
+  });
+
+  if (wk > 1) {
+    const note = document.createElement('div');
+    note.className = 'ex-week-note';
+    note.textContent = 'Week ' + wk + ' — add 2 reps or heavier band on every set';
+    card.appendChild(note);
+  }
+
+  // Sins
+  const sg = document.getElementById('sin-grid');
+  sg.innerHTML = '';
+  SINS.forEach(sin => {
+    const committed = !!dd.sins[sin.id];
+    const el = document.createElement('div');
+    el.className = 'sin-item' + (committed ? ' sinned' : '');
+    el.innerHTML = `<div class="sin-name">${sin.name}</div><div class="sin-pts">${sin.pts}</div>`;
+    el.onclick = () => {
+      if (committed) { dd.sins[sin.id] = false; dd.aura -= sin.pts; toast('Sin absolved'); }
+      else { dd.sins[sin.id] = true; dd.aura += sin.pts; toast(sin.pts + ' aura — weakness', true); }
+      recalc(S); save(S); render();
+    };
+    sg.appendChild(el);
+  });
+
+  // History
+  const hg = document.getElementById('hist-grid');
+  hg.innerHTML = '';
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const k = d.toISOString().slice(0, 10);
+    const hd = S.days[k];
+    const el = document.createElement('div');
+    el.className = 'hday';
+    el.textContent = d.getDate();
+    if (hd) {
+      const c = Object.values(hd.v).filter(Boolean).length;
+      if (c >= 5) el.classList.add('s');
+      else if (c >= 3) el.classList.add('m');
+      else el.classList.add('w');
+    }
+    el.title = k + (hd ? ` — ${Object.values(hd.v).filter(Boolean).length}/7 virtues` : ' — no data');
+    hg.appendChild(el);
+  }
+}
+
+function exportData() {
+  const data = JSON.stringify(S, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'adonis_backup_' + todayKey() + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('Backup downloaded');
+}
+
+function toggleImport() {
+  const el = document.getElementById('import-wrap');
+  el.classList.toggle('open');
+}
+
+function doImport() {
+  const txt = document.getElementById('import-txt').value.trim();
+  try {
+    const parsed = JSON.parse(txt);
+    if (!parsed.days) throw new Error('Invalid');
+    S = parsed;
+    recalc(S);
+    save(S);
+    render();
+    toggleImport();
+    toast('Data imported successfully');
+  } catch(e) {
+    toast('Invalid backup — check and retry', true);
+  }
+}
+
+function resetDay() {
+  const today = todayKey();
+  S.days[today] = { v: {}, sins: {}, ex: {}, aura: 0 };
+  recalc(S);
+  save(S);
+  render();
+  toast('Today reset', true);
+}
+
+render();
+</script>
+</body>
+</html>
