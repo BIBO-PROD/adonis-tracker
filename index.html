@@ -2,605 +2,707 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0a0a0a">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#080808">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <title>Adonis Protocol</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --purple: #9b5de5;
-    --purple-dim: #5a2d8a;
-    --purple-bg: #1a0a2e;
-    --green: #00f5a0;
-    --amber: #f5a623;
-    --red: #ff4444;
-    --bg: #0a0a0a;
-    --bg2: #111111;
-    --bg3: #161616;
-    --border: #1e1e1e;
-    --border2: #2a2a2a;
-    --text: #ffffff;
-    --text2: #888888;
-    --text3: #444444;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  .app {
-    max-width: 480px;
-    margin: 0 auto;
-    padding: 20px 16px 40px;
-  }
-
-  /* TOPBAR */
-  .topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .logo {
-    font-family: 'Syne', sans-serif;
-    font-size: 14px;
-    font-weight: 800;
-    letter-spacing: 4px;
-    color: var(--purple);
-    text-transform: uppercase;
-  }
-
-  .date-pill {
-    font-size: 11px;
-    color: var(--text3);
-    letter-spacing: 1px;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    padding: 4px 10px;
-    border-radius: 20px;
-  }
-
-  /* HERO RING */
-  .hero {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 12px;
-    display: grid;
-    grid-template-columns: 110px 1fr;
-    gap: 20px;
-    align-items: center;
-  }
-
-  .ring-wrap {
-    position: relative;
-    width: 110px;
-    height: 110px;
-  }
-
-  .ring-wrap svg {
-    transform: rotate(-90deg);
-    width: 110px;
-    height: 110px;
-  }
-
-  .ring-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-  }
-
-  .ring-num {
-    font-family: 'Syne', sans-serif;
-    font-size: 28px;
-    font-weight: 800;
-    color: var(--purple);
-    line-height: 1;
-  }
-
-  .ring-lbl {
-    font-size: 9px;
-    color: var(--text3);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-top: 3px;
-  }
-
-  .hero-info {}
-
-  .rank-chip {
-    display: inline-block;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--purple);
-    background: var(--purple-bg);
-    padding: 4px 10px;
-    border-radius: 20px;
-    margin-bottom: 8px;
-  }
-
-  .rank-name {
-    font-family: 'Syne', sans-serif;
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--text);
-    line-height: 1;
-    margin-bottom: 6px;
-  }
-
-  .rank-next {
-    font-size: 11px;
-    color: var(--text3);
-    margin-bottom: 8px;
-  }
-
-  .rank-next span { color: var(--purple); }
-
-  .prog-bar {
-    height: 3px;
-    background: var(--border);
-    border-radius: 2px;
-    overflow: hidden;
-    margin-bottom: 6px;
-  }
-
-  .prog-fill {
-    height: 100%;
-    background: var(--purple);
-    border-radius: 2px;
-    transition: width 0.6s ease;
-  }
-
-  .week-lbl {
-    font-size: 10px;
-    color: var(--text3);
-    letter-spacing: 1px;
-  }
-
-  /* STAT ROW */
-  .stat-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-
-  .stat-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 10px;
-    text-align: center;
-  }
-
-  .stat-num {
-    font-family: 'Syne', sans-serif;
-    font-size: 22px;
-    font-weight: 800;
-    line-height: 1;
-    margin-bottom: 5px;
-  }
-
-  .stat-num.g { color: var(--green); }
-  .stat-num.p { color: var(--purple); }
-  .stat-num.a { color: var(--amber); }
-
-  .stat-lbl {
-    font-size: 9px;
-    color: var(--text3);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-  }
-
-  /* SECTION HEADER */
-  .sec-hd {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: var(--text3);
-    margin: 20px 0 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .sec-hd::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  /* VIRTUE LIST */
-  .virtue-list { display: flex; flex-direction: column; gap: 6px; }
-
-  .v-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 12px 14px;
-    cursor: pointer;
-    transition: border-color 0.15s, background 0.15s;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .v-item:hover { border-color: var(--border2); }
-  .v-item:active { background: var(--bg3); }
-
-  .v-item.done { border-color: rgba(155, 93, 229, 0.25); }
-
-  .v-dot {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 1.5px solid var(--border2);
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    color: transparent;
-    background: var(--bg);
-    transition: all 0.15s;
-  }
-
-  .v-item.done .v-dot {
-    background: var(--purple);
-    border-color: var(--purple);
-    color: #fff;
-  }
-
-  .v-text {
-    flex: 1;
-    font-size: 13px;
-    color: var(--text2);
-    font-weight: 400;
-    transition: color 0.15s;
-  }
-
-  .v-item.done .v-text {
-    color: var(--text3);
-    text-decoration: line-through;
-  }
-
-  .v-pts {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--purple);
-  }
-
-  /* DAY TABS */
-  .day-tabs {
-    display: flex;
-    gap: 5px;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
-  }
-
-  .dtab {
-    font-size: 10px;
-    font-weight: 600;
-    padding: 6px 12px;
-    border-radius: 20px;
-    cursor: pointer;
-    border: 1px solid var(--border);
-    color: var(--text3);
-    background: var(--bg2);
-    letter-spacing: 1px;
-    transition: all 0.15s;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .dtab:hover { border-color: var(--border2); color: var(--text2); }
-  .dtab.active { background: var(--purple); border-color: var(--purple); color: #fff; }
-  .dtab.today-marker { border-color: var(--purple-dim); }
-
-  /* EXERCISE LIST */
-  .ex-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-  }
-
-  .ex-title {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    color: var(--text3);
-    padding: 10px 14px;
-    border-bottom: 1px solid var(--border);
-    text-transform: uppercase;
-  }
-
-  .ex-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 11px 14px;
-    border-bottom: 1px solid var(--border);
-    cursor: pointer;
-    transition: background 0.1s;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .ex-item:last-child { border-bottom: none; }
-  .ex-item:hover { background: var(--bg3); }
-  .ex-item.xdone { background: rgba(0,0,0,0.3); }
-
-  .ex-box {
-    width: 16px;
-    height: 16px;
-    border-radius: 4px;
-    border: 1px solid var(--border2);
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    color: transparent;
-    background: var(--bg);
-    transition: all 0.15s;
-  }
-
-  .ex-item.xdone .ex-box {
-    background: var(--purple);
-    border-color: var(--purple);
-    color: #fff;
-  }
-
-  .ex-name {
-    flex: 1;
-    font-size: 13px;
-    color: var(--text2);
-    transition: color 0.15s;
-  }
-
-  .ex-item.xdone .ex-name {
-    color: var(--text3);
-    text-decoration: line-through;
-  }
-
-  .ex-set {
-    font-size: 11px;
-    color: var(--text3);
-    font-weight: 500;
-    font-family: 'Syne', sans-serif;
-  }
-
-  .ex-week-note {
-    font-size: 10px;
-    color: rgba(155,93,229,0.4);
-    font-style: italic;
-    padding: 8px 14px;
-    border-top: 1px solid var(--border);
-    text-align: center;
-  }
-
-  /* SINS */
-  .sin-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
-  }
-
-  .sin-item {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 12px 14px;
-    cursor: pointer;
-    text-align: center;
-    transition: all 0.15s;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .sin-item:hover { border-color: #ff444440; }
-  .sin-item.sinned { border-color: rgba(255,68,68,0.3); background: #1a0808; }
-
-  .sin-name { font-size: 12px; color: var(--text2); margin-bottom: 4px; }
-  .sin-item.sinned .sin-name { color: var(--red); }
-  .sin-pts { font-size: 11px; font-weight: 700; color: var(--red); }
-
-  /* HISTORY */
-  .hist-grid {
-    display: flex;
-    gap: 4px;
-    flex-wrap: wrap;
-  }
-
-  .hday {
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 9px;
-    color: var(--text3);
-    font-weight: 600;
-    cursor: default;
-    transition: all 0.15s;
-  }
-
-  .hday.s { background: var(--purple); border-color: var(--purple); color: #fff; }
-  .hday.m { background: var(--purple-dim); border-color: var(--purple-dim); color: #ccc; }
-  .hday.w { background: #12091e; border-color: #1e1030; color: #4a3a5a; }
-
-  /* ACTIONS */
-  .action-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 6px;
-    margin-top: 24px;
-  }
-
-  .act-btn {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    color: var(--text3);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    padding: 11px 8px;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    text-transform: uppercase;
-    transition: all 0.15s;
-    text-align: center;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .act-btn:hover { border-color: var(--purple); color: var(--purple); }
-  .act-btn.danger:hover { border-color: var(--red); color: var(--red); }
-
-  /* IMPORT AREA */
-  .import-wrap {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px;
-    margin-top: 8px;
-    display: none;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .import-wrap.open { display: flex; }
-
-  .import-wrap textarea {
-    background: var(--bg);
-    border: 1px solid var(--border2);
-    border-radius: 8px;
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    padding: 10px;
-    width: 100%;
-    height: 90px;
-    resize: none;
-    outline: none;
-  }
-
-  .import-wrap textarea::placeholder { color: var(--text3); }
-  .import-wrap textarea:focus { border-color: var(--purple); }
-
-  .import-btns { display: flex; gap: 8px; }
-
-  .imp-confirm {
-    background: var(--purple);
-    border: none;
-    border-radius: 8px;
-    color: #fff;
-    font-size: 11px;
-    font-weight: 600;
-    padding: 9px 18px;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .imp-cancel {
-    background: none;
-    border: 1px solid var(--border2);
-    border-radius: 8px;
-    color: var(--text3);
-    font-size: 11px;
-    font-weight: 600;
-    padding: 9px 18px;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: all 0.15s;
-  }
-
-  .imp-cancel:hover { border-color: var(--red); color: var(--red); }
-
-  /* TOAST */
-  .toast {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%) translateY(80px);
-    background: var(--bg2);
-    border: 1px solid var(--purple);
-    color: var(--purple);
-    font-size: 12px;
-    font-weight: 600;
-    padding: 10px 22px;
-    border-radius: 30px;
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    pointer-events: none;
-    z-index: 999;
-    white-space: nowrap;
-    letter-spacing: 1px;
-  }
-
-  .toast.show { transform: translateX(-50%) translateY(0); }
-  .toast.neg { border-color: var(--red); color: var(--red); }
-
-  /* FOOTER */
-  .footer {
-    text-align: center;
-    margin-top: 32px;
-    font-size: 10px;
-    color: var(--text3);
-    letter-spacing: 1px;
-  }
-
-  /* MOBILE SCROLL */
-  @media (max-width: 480px) {
-    .app { padding: 16px 12px 60px; }
-    .hero { grid-template-columns: 100px 1fr; gap: 14px; }
-    .ring-num { font-size: 24px; }
-    .rank-name { font-size: 18px; }
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --purple: #a855f7;
+  --purple-light: #c084fc;
+  --purple-dim: #6b21a8;
+  --purple-bg: #1e0a3c;
+  --green: #34d399;
+  --amber: #fbbf24;
+  --red: #f87171;
+  --red-bg: #1f0a0a;
+  --bg: #080808;
+  --bg2: #0f0f0f;
+  --bg3: #141414;
+  --bg4: #1a1a1a;
+  --border: #222222;
+  --border2: #2e2e2e;
+  --text: #f0f0f0;
+  --text2: #999999;
+  --text3: #555555;
+  --text4: #333333;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 28px 24px 64px;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 5px;
+  color: var(--purple);
+  text-transform: uppercase;
+}
+
+.date-pill {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 1px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 100px;
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px 24px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.ring-wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+}
+
+.ring-wrap svg {
+  transform: rotate(-90deg);
+  width: 120px;
+  height: 120px;
+}
+
+.ring-bg { fill: none; stroke: var(--border); stroke-width: 10; }
+.ring-fill { fill: none; stroke: var(--purple); stroke-width: 10; stroke-linecap: round; }
+
+.ring-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.ring-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 34px;
+  color: var(--purple-light);
+  line-height: 1;
+  letter-spacing: 2px;
+}
+
+.ring-lbl {
+  font-size: 9px;
+  color: var(--text3);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.hero-info { flex: 1; min-width: 0; }
+
+.rank-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--purple-light);
+  background: var(--purple-bg);
+  border: 1px solid var(--purple-dim);
+  padding: 4px 12px;
+  border-radius: 100px;
+  margin-bottom: 10px;
+}
+
+.rank-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  letter-spacing: 3px;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rank-next {
+  font-size: 12px;
+  color: var(--text3);
+  margin-bottom: 10px;
+  font-weight: 300;
+}
+
+.rank-next strong { color: var(--purple-light); font-weight: 500; }
+
+.prog-bar {
+  height: 4px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.prog-fill {
+  height: 100%;
+  background: var(--purple);
+  border-radius: 4px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.week-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--text4);
+  letter-spacing: 1px;
+}
+
+/* ── RANK LADDER ── */
+.rank-ladder {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+
+.ladder-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 16px;
+}
+
+.ladder-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.ladder-item:last-child { border-bottom: none; }
+
+.ladder-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--text4);
+  border: 1.5px solid var(--border2);
+  flex-shrink: 0;
+}
+
+.ladder-item.achieved .ladder-dot { background: var(--purple); border-color: var(--purple); }
+.ladder-item.current .ladder-dot { background: var(--purple-light); border-color: var(--purple-light); box-shadow: 0 0 8px var(--purple); }
+
+.ladder-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 2px;
+  color: var(--text4);
+  flex: 1;
+}
+
+.ladder-item.achieved .ladder-name { color: var(--text2); }
+.ladder-item.current .ladder-name { color: var(--purple-light); }
+
+.ladder-pts {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--text4);
+}
+
+.ladder-item.achieved .ladder-pts { color: var(--purple-dim); }
+.ladder-item.current .ladder-pts { color: var(--purple); }
+
+.ladder-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border-radius: 100px;
+  text-transform: uppercase;
+}
+
+.badge-done { background: #1a0f2e; color: var(--purple-dim); border: 1px solid var(--purple-dim); }
+.badge-current { background: var(--purple-bg); color: var(--purple-light); border: 1px solid var(--purple); }
+.badge-locked { background: var(--bg3); color: var(--text4); border: 1px solid var(--border); }
+
+/* ── STATS ── */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.stat-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px 14px;
+  text-align: center;
+}
+
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  letter-spacing: 2px;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.stat-num.g { color: var(--green); }
+.stat-num.p { color: var(--purple); }
+.stat-num.a { color: var(--amber); }
+
+.stat-lbl {
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+/* ── SECTION HEADER ── */
+.sec-hd {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin: 28px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sec-hd::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── VIRTUES ── */
+.virtue-list { display: flex; flex-direction: column; gap: 8px; }
+
+.v-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.v-item:hover { border-color: var(--border2); background: var(--bg3); }
+.v-item.done { border-color: rgba(168, 85, 247, 0.3); }
+
+.v-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border2);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: transparent;
+  transition: all 0.2s;
+}
+
+.v-item.done .v-dot { background: var(--purple); border-color: var(--purple); color: #fff; }
+
+.v-text {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text2);
+  font-weight: 300;
+  line-height: 1.3;
+}
+
+.v-item.done .v-text { color: var(--text4); text-decoration: line-through; }
+
+.v-pts {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--purple);
+  flex-shrink: 0;
+}
+
+/* ── DAY TABS ── */
+.day-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.dtab {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: 100px;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  color: var(--text3);
+  background: var(--bg2);
+  letter-spacing: 1px;
+  transition: all 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.dtab:hover { border-color: var(--border2); color: var(--text2); }
+.dtab.active { background: var(--purple); border-color: var(--purple); color: #fff; }
+.dtab.today-mark { border-color: var(--purple-dim); }
+
+/* ── EXERCISE CARD ── */
+.ex-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.ex-title-bar {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+
+.ex-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.1s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.ex-item:last-child { border-bottom: none; }
+.ex-item:hover { background: var(--bg3); }
+.ex-item.xdone { background: var(--bg); }
+
+.ex-box {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 1px solid var(--border2);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: transparent;
+  transition: all 0.15s;
+}
+
+.ex-item.xdone .ex-box { background: var(--purple); border-color: var(--purple); color: #fff; }
+
+.ex-name {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text2);
+  font-weight: 300;
+}
+
+.ex-item.xdone .ex-name { color: var(--text4); text-decoration: line-through; }
+
+.ex-set {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text3);
+  flex-shrink: 0;
+}
+
+.ex-note {
+  font-size: 11px;
+  color: rgba(168, 85, 247, 0.4);
+  font-style: italic;
+  padding: 10px 18px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* ── SINS ── */
+.sin-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.sin-item {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 18px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.sin-item:hover { border-color: rgba(248, 113, 113, 0.3); }
+.sin-item.sinned { border-color: rgba(248, 113, 113, 0.35); background: var(--red-bg); }
+
+.sin-name {
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 5px;
+  font-weight: 300;
+}
+
+.sin-item.sinned .sin-name { color: var(--red); }
+
+.sin-pts {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--red);
+}
+
+/* ── HISTORY ── */
+.hist-grid {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.hday {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--text4);
+  font-weight: 400;
+}
+
+.hday.s { background: var(--purple); border-color: var(--purple); color: #fff; }
+.hday.m { background: #3b1060; border-color: var(--purple-dim); color: var(--purple-light); }
+.hday.w { background: #120920; border-color: #1e0f30; color: var(--text4); }
+
+/* ── ACTIONS ── */
+.action-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.act-btn {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  padding: 13px 10px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.15s;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.act-btn:hover { border-color: var(--purple); color: var(--purple); }
+.act-btn.danger:hover { border-color: var(--red); color: var(--red); }
+
+/* ── IMPORT ── */
+.import-wrap {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  margin-top: 10px;
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.import-wrap.open { display: flex; }
+
+.import-wrap textarea {
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  padding: 12px;
+  width: 100%;
+  height: 100px;
+  resize: none;
+  outline: none;
+  line-height: 1.5;
+}
+
+.import-wrap textarea::placeholder { color: var(--text4); }
+.import-wrap textarea:focus { border-color: var(--purple); }
+
+.import-btns { display: flex; gap: 8px; }
+
+.imp-confirm {
+  background: var(--purple);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 11px 20px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.imp-cancel {
+  background: none;
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 11px 20px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.15s;
+}
+
+.imp-cancel:hover { border-color: var(--red); color: var(--red); }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--bg3);
+  border: 1px solid var(--purple);
+  color: var(--purple-light);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 11px 24px;
+  border-radius: 100px;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+  z-index: 999;
+  white-space: nowrap;
+  letter-spacing: 1px;
+}
+
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.neg { border-color: var(--red); color: var(--red); }
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center;
+  margin-top: 40px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--text4);
+  letter-spacing: 2px;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 480px) {
+  .app { padding: 20px 16px 60px; }
+  .hero { padding: 20px 18px; gap: 20px; }
+  .ring-wrap { width: 100px; height: 100px; }
+  .ring-wrap svg { width: 100px; height: 100px; }
+  .ring-num { font-size: 28px; }
+  .rank-name { font-size: 28px; }
+  .stat-num { font-size: 26px; }
+}
 </style>
 </head>
 <body>
 
 <div class="app">
+
   <div class="topbar">
     <div class="logo">Adonis Protocol</div>
     <div class="date-pill" id="date-str">—</div>
   </div>
 
+  <!-- HERO -->
   <div class="hero">
     <div class="ring-wrap">
-      <svg viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="55" cy="55" r="46" fill="none" stroke="#1e1e1e" stroke-width="9"/>
-        <circle cx="55" cy="55" r="46" fill="none" stroke="#9b5de5" stroke-width="9"
-          stroke-linecap="round"
-          stroke-dasharray="289"
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <circle class="ring-bg" cx="60" cy="60" r="50"/>
+        <circle class="ring-fill" cx="60" cy="60" r="50"
+          stroke-dasharray="314"
           id="ring-dash"
-          stroke-dashoffset="289"
-          style="transition: stroke-dashoffset 0.6s ease;"/>
+          stroke-dashoffset="314"/>
       </svg>
       <div class="ring-center">
         <div class="ring-num" id="ring-num">0</div>
@@ -608,14 +710,21 @@
       </div>
     </div>
     <div class="hero-info">
-      <div class="rank-chip" id="rank-chip">Rank</div>
+      <div class="rank-chip" id="rank-chip">Rank I</div>
       <div class="rank-name" id="rank-name">Joffrey</div>
-      <div class="rank-next" id="rank-next">— to <span>Squire</span></div>
+      <div class="rank-next" id="rank-next">— to <strong>Apprentice</strong></div>
       <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
       <div class="week-lbl" id="week-lbl">Week 1 · Day 1</div>
     </div>
   </div>
 
+  <!-- RANK LADDER -->
+  <div class="rank-ladder">
+    <div class="ladder-title">Ascension path</div>
+    <div id="ladder-list"></div>
+  </div>
+
+  <!-- STATS -->
   <div class="stat-row">
     <div class="stat-card">
       <div class="stat-num g" id="streak-n">0</div>
@@ -623,7 +732,7 @@
     </div>
     <div class="stat-card">
       <div class="stat-num p" id="week-n">0</div>
-      <div class="stat-lbl">Week pts</div>
+      <div class="stat-lbl">This week</div>
     </div>
     <div class="stat-card">
       <div class="stat-num a" id="best-n">0</div>
@@ -631,19 +740,24 @@
     </div>
   </div>
 
+  <!-- VIRTUES -->
   <div class="sec-hd">Daily virtues</div>
   <div class="virtue-list" id="virtue-list"></div>
 
+  <!-- TRAINING -->
   <div class="sec-hd">Training</div>
   <div class="day-tabs" id="day-tabs"></div>
   <div class="ex-card" id="ex-card"></div>
 
+  <!-- SINS -->
   <div class="sec-hd">Sins</div>
   <div class="sin-grid" id="sin-grid"></div>
 
+  <!-- HISTORY -->
   <div class="sec-hd">30-day chronicle</div>
   <div class="hist-grid" id="hist-grid"></div>
 
+  <!-- ACTIONS -->
   <div class="action-row">
     <button class="act-btn" onclick="exportData()">Export</button>
     <button class="act-btn" onclick="toggleImport()">Import</button>
@@ -658,21 +772,25 @@
     </div>
   </div>
 
-  <div class="footer">Joffrey → Adonis &nbsp;·&nbsp; Stay consistent</div>
+  <div class="footer">Joffrey &rarr; Adonis &nbsp;&middot;&nbsp; Stay consistent</div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-const SK = 'adonis_v3_standalone';
+const SK = 'adonis_v4';
 
 const RANKS = [
-  { n: 'Joffrey',  min: 0,    max: 100  },
-  { n: 'Squire',   min: 100,  max: 250  },
-  { n: 'Knight',   min: 250,  max: 500  },
-  { n: 'Lord',     min: 500,  max: 900  },
-  { n: 'King',     min: 900,  max: 1500 },
-  { n: 'Adonis',   min: 1500, max: 99999 }
+  { n: 'Joffrey',      sub: 'The Unworthy',         min: 0,    max: 75   },
+  { n: 'Apprentice',   sub: 'First steps taken',     min: 75,   max: 175  },
+  { n: 'Initiate',     sub: 'The grind begins',      min: 175,  max: 325  },
+  { n: 'Soldier',      sub: 'Showing up daily',      min: 325,  max: 525  },
+  { n: 'Warrior',      sub: 'Pain is familiar now',  min: 525,  max: 800  },
+  { n: 'Gladiator',    sub: 'Built in the fire',     min: 800,  max: 1150 },
+  { n: 'Champion',     sub: 'Others notice',         min: 1150, max: 1600 },
+  { n: 'Sovereign',    sub: 'Command the room',      min: 1600, max: 2200 },
+  { n: 'Legend',       sub: 'Few reach this',        min: 2200, max: 3000 },
+  { n: 'Adonis',       sub: 'The pinnacle',          min: 3000, max: 99999 }
 ];
 
 const VIRTUES = [
@@ -694,50 +812,50 @@ const SINS = [
 
 const WD = {
   1: { t: 'Chest + Shoulders + Abs', ex: [
-    ['Incline pushups on chair','4x15'],
-    ['Dumbbell chest fly floor','4x12'],
-    ['Decline pushups feet on chair','3x12'],
-    ['Resistance band chest press','3x15'],
-    ['Dumbbell shoulder press','4x12'],
-    ['Resistance band lateral raise','3x15'],
-    ['Leg raises','4x15'],
-    ['Bicycle crunches','3x20']
+    ['Incline pushups on chair','4×15'],
+    ['Dumbbell chest fly (floor)','4×12'],
+    ['Decline pushups (feet on chair)','3×12'],
+    ['Resistance band chest press','3×15'],
+    ['Dumbbell shoulder press','4×12'],
+    ['Resistance band lateral raise','3×15'],
+    ['Leg raises','4×15'],
+    ['Bicycle crunches','3×20']
   ]},
   2: { t: 'Back + Biceps + Abs', ex: [
-    ['Edge pullups','5x max'],
-    ['Resistance band rows','4x15'],
-    ['Dumbbell bent over row','4x12'],
-    ['Resistance band face pulls','3x15'],
-    ['Dumbbell curl','3x12'],
-    ['Resistance band hammer curl','3x12'],
-    ['Hollow body hold','3x30s'],
-    ['Reverse crunches','4x15']
+    ['Edge pullups','5×max'],
+    ['Resistance band rows','4×15'],
+    ['Dumbbell bent over row','4×12'],
+    ['Resistance band face pulls','3×15'],
+    ['Dumbbell curl','3×12'],
+    ['Resistance band hammer curl','3×12'],
+    ['Hollow body hold','3×30s'],
+    ['Reverse crunches','4×15']
   ]},
-  3: { t: 'Cricket — active recovery', ex: [
+  3: { t: 'Cricket — Active Recovery', ex: [
     ['Play cricket 1-2 hours','active'],
     ['Light stretching post game','10 min']
   ]},
   4: { t: 'Chest + Triceps + Abs', ex: [
-    ['Wide pushups','4x15'],
-    ['Resistance band chest fly','4x15'],
-    ['Dumbbell floor press','4x12'],
-    ['Diamond pushups','3x12'],
-    ['Chair dips','4x12'],
-    ['Resistance band pushdown','3x15'],
-    ['Plank','3x45s'],
-    ['Dead bug','3x10 each']
+    ['Wide pushups','4×15'],
+    ['Resistance band chest fly','4×15'],
+    ['Dumbbell floor press','4×12'],
+    ['Diamond pushups','3×12'],
+    ['Chair dips','4×12'],
+    ['Resistance band pushdown','3×15'],
+    ['Plank','3×45s'],
+    ['Dead bug','3×10 each']
   ]},
   5: { t: 'Back + Legs + Shoulders', ex: [
-    ['Resistance band lat pulldown','4x12'],
-    ['Dumbbell bent over row','4x12'],
-    ['Superman holds','3x12'],
-    ['Resistance band pull apart','3x20'],
-    ['Goblet squat dumbbell','4x15'],
-    ['Reverse lunges','3x12 each'],
-    ['Single leg glute bridge','3x12 each'],
-    ['Resistance band upright row','3x12']
+    ['Resistance band lat pulldown','4×12'],
+    ['Dumbbell bent over row','4×12'],
+    ['Superman holds','3×12'],
+    ['Resistance band pull apart','3×20'],
+    ['Goblet squat (dumbbell)','4×15'],
+    ['Reverse lunges','3×12 each'],
+    ['Single leg glute bridge','3×12 each'],
+    ['Resistance band upright row','3×12']
   ]},
-  6: { t: 'Cricket — active recovery', ex: [
+  6: { t: 'Cricket — Active Recovery', ex: [
     ['Play cricket 1-2 hours','active'],
     ['Light stretching post game','10 min']
   ]},
@@ -750,16 +868,12 @@ const WD = {
 function todayKey() { return new Date().toISOString().slice(0, 10); }
 
 function load() {
-  try {
-    const r = localStorage.getItem(SK);
-    if (r) return JSON.parse(r);
-  } catch(e) {}
+  try { const r = localStorage.getItem(SK); if (r) return JSON.parse(r); }
+  catch(e) {}
   return { totalAura: 0, bestStreak: 0, startDate: todayKey(), days: {} };
 }
 
-function save(s) {
-  try { localStorage.setItem(SK, JSON.stringify(s)); } catch(e) {}
-}
+function save(s) { try { localStorage.setItem(SK, JSON.stringify(s)); } catch(e) {} }
 
 function getDay(s, k) {
   if (!s.days[k]) s.days[k] = { v: {}, sins: {}, ex: {}, aura: 0 };
@@ -767,18 +881,18 @@ function getDay(s, k) {
 }
 
 function getRank(a) {
-  for (let i = RANKS.length - 1; i >= 0; i--) if (a >= RANKS[i].min) return RANKS[i];
-  return RANKS[0];
+  for (let i = RANKS.length - 1; i >= 0; i--) if (a >= RANKS[i].min) return { ...RANKS[i], idx: i };
+  return { ...RANKS[0], idx: 0 };
 }
 
 function getNext(a) {
-  for (let i = 0; i < RANKS.length; i++) if (a < RANKS[i].max) return RANKS[i];
-  return RANKS[RANKS.length - 1];
+  for (let i = 0; i < RANKS.length; i++) if (a < RANKS[i].max) return { ...RANKS[i], idx: i };
+  return { ...RANKS[RANKS.length-1], idx: RANKS.length-1 };
 }
 
 function calcStreak(s) {
   let streak = 0, d = new Date();
-  for (let i = 0; i < 90; i++) {
+  for (let i = 0; i < 120; i++) {
     const k = d.toISOString().slice(0, 10);
     const day = s.days[k];
     if (!day || Object.values(day.v).filter(Boolean).length < 3) break;
@@ -789,8 +903,7 @@ function calcStreak(s) {
 }
 
 function calcWeek(s) {
-  let t = 0;
-  const d = new Date();
+  let t = 0; const d = new Date();
   for (let i = 0; i < 7; i++) {
     const k = d.toISOString().slice(0, 10);
     if (s.days[k]) t += (s.days[k].aura || 0);
@@ -815,13 +928,13 @@ function getWeekNum(s) {
   return Math.floor(diff / 7) + 1;
 }
 
-let toastTimer = null;
+let toastT = null;
 function toast(msg, neg) {
   const el = document.getElementById('toast');
   el.textContent = msg;
   el.className = 'toast show' + (neg ? ' neg' : '');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
+  clearTimeout(toastT);
+  toastT = setTimeout(() => el.classList.remove('show'), 2400);
 }
 
 let S = load();
@@ -833,16 +946,22 @@ function render() {
   const aura = S.totalAura;
   const rank = getRank(aura);
   const next = getNext(aura);
-  const pct = rank.min === next.min ? 100 : Math.min(100, Math.round(((aura - rank.min) / (next.max - rank.min)) * 100));
-  const circumference = 289;
+  const pct = rank.min === next.min ? 100
+    : Math.min(100, Math.round(((aura - rank.min) / (next.max - rank.min)) * 100));
+  const circumference = 314;
   const offset = Math.round(circumference * (1 - pct / 100));
 
-  document.getElementById('date-str').textContent = new Date().toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+  document.getElementById('date-str').textContent =
+    new Date().toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
+
   document.getElementById('ring-num').textContent = aura;
   document.getElementById('ring-dash').setAttribute('stroke-dashoffset', offset);
-  document.getElementById('rank-chip').textContent = rank.n;
-  document.getElementById('rank-name').textContent = rank.n === 'Adonis' ? 'Adonis Achieved' : rank.n;
-  document.getElementById('rank-next').innerHTML = aura >= 1500 ? 'Peak form. Maintain.' : `${next.max - aura} pts to <span>${next.n}</span>`;
+
+  document.getElementById('rank-chip').textContent = 'Rank ' + (rank.idx + 1);
+  document.getElementById('rank-name').textContent = rank.n;
+  document.getElementById('rank-next').innerHTML = aura >= 3000
+    ? 'The pinnacle. Maintain it.'
+    : `${next.max - aura} pts to <strong>${next.n}</strong>`;
   document.getElementById('prog-fill').style.width = pct + '%';
 
   const wk = Math.min(getWeekNum(S), 8);
@@ -855,6 +974,22 @@ function render() {
   document.getElementById('week-n').textContent = calcWeek(S);
   document.getElementById('best-n').textContent = S.bestStreak;
 
+  // Rank ladder
+  const ladder = document.getElementById('ladder-list');
+  ladder.innerHTML = '';
+  RANKS.forEach((r, i) => {
+    const achieved = aura >= r.max;
+    const current = (i === rank.idx);
+    const el = document.createElement('div');
+    el.className = 'ladder-item' + (achieved ? ' achieved' : '') + (current ? ' current' : '');
+    let badge = '';
+    if (achieved) badge = '<span class="ladder-badge badge-done">Done</span>';
+    else if (current) badge = '<span class="ladder-badge badge-current">You</span>';
+    else badge = '<span class="ladder-badge badge-locked">' + r.min + '+</span>';
+    el.innerHTML = `<div class="ladder-dot"></div><div class="ladder-name">${r.n}</div><div class="ladder-pts">${r.sub}</div>${badge}`;
+    ladder.appendChild(el);
+  });
+
   // Virtues
   const vl = document.getElementById('virtue-list');
   vl.innerHTML = '';
@@ -864,8 +999,8 @@ function render() {
     el.className = 'v-item' + (done ? ' done' : '');
     el.innerHTML = `<div class="v-dot">${done ? '✓' : ''}</div><div class="v-text">${v.name}</div><div class="v-pts">+${v.pts}</div>`;
     el.onclick = () => {
-      if (done) { dd.v[v.id] = false; dd.aura -= v.pts; toast('-' + v.pts + ' aura', true); }
-      else { dd.v[v.id] = true; dd.aura += v.pts; toast('+' + v.pts + ' aura — glory grows'); }
+      if (done) { dd.v[v.id] = false; dd.aura -= v.pts; toast('−' + v.pts + ' aura', true); }
+      else { dd.v[v.id] = true; dd.aura += v.pts; toast('+' + v.pts + ' aura'); }
       recalc(S); save(S); render();
     };
     vl.appendChild(el);
@@ -876,7 +1011,7 @@ function render() {
   tabs.innerHTML = '';
   for (let d = 1; d <= 7; d++) {
     const tab = document.createElement('div');
-    tab.className = 'dtab' + (d === selDay ? ' active' : '') + (d === td ? ' today-marker' : '');
+    tab.className = 'dtab' + (d === selDay ? ' active' : '') + (d === td ? ' today-mark' : '');
     tab.textContent = 'D' + d;
     tab.title = WD[d].t;
     tab.onclick = () => { selDay = d; render(); };
@@ -887,10 +1022,10 @@ function render() {
   const card = document.getElementById('ex-card');
   card.innerHTML = '';
   const prog = WD[selDay];
-  const titleEl = document.createElement('div');
-  titleEl.className = 'ex-title';
-  titleEl.textContent = prog.t;
-  card.appendChild(titleEl);
+  const titleBar = document.createElement('div');
+  titleBar.className = 'ex-title-bar';
+  titleBar.textContent = prog.t;
+  card.appendChild(titleBar);
 
   prog.ex.forEach(([name, sets], i) => {
     const exId = 'd' + selDay + '_' + i;
@@ -904,7 +1039,7 @@ function render() {
 
   if (wk > 1) {
     const note = document.createElement('div');
-    note.className = 'ex-week-note';
+    note.className = 'ex-note';
     note.textContent = 'Week ' + wk + ' — add 2 reps or heavier band on every set';
     card.appendChild(note);
   }
@@ -929,8 +1064,7 @@ function render() {
   const hg = document.getElementById('hist-grid');
   hg.innerHTML = '';
   for (let i = 29; i >= 0; i--) {
-    const d = new Date();
-    d.setDate(d.getDate() - i);
+    const d = new Date(); d.setDate(d.getDate() - i);
     const k = d.toISOString().slice(0, 10);
     const hd = S.days[k];
     const el = document.createElement('div');
@@ -942,7 +1076,7 @@ function render() {
       else if (c >= 3) el.classList.add('m');
       else el.classList.add('w');
     }
-    el.title = k + (hd ? ` — ${Object.values(hd.v).filter(Boolean).length}/7 virtues` : ' — no data');
+    el.title = k + (hd ? ` — ${Object.values(hd.v).filter(Boolean).length}/7 virtues` : '');
     hg.appendChild(el);
   }
 }
@@ -954,16 +1088,13 @@ function exportData() {
   const a = document.createElement('a');
   a.href = url;
   a.download = 'adonis_backup_' + todayKey() + '.json';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
   toast('Backup downloaded');
 }
 
 function toggleImport() {
-  const el = document.getElementById('import-wrap');
-  el.classList.toggle('open');
+  document.getElementById('import-wrap').classList.toggle('open');
 }
 
 function doImport() {
@@ -971,23 +1102,16 @@ function doImport() {
   try {
     const parsed = JSON.parse(txt);
     if (!parsed.days) throw new Error('Invalid');
-    S = parsed;
-    recalc(S);
-    save(S);
-    render();
+    S = parsed; recalc(S); save(S); render();
     toggleImport();
-    toast('Data imported successfully');
-  } catch(e) {
-    toast('Invalid backup — check and retry', true);
-  }
+    toast('Data imported');
+  } catch(e) { toast('Invalid backup — check and retry', true); }
 }
 
 function resetDay() {
   const today = todayKey();
   S.days[today] = { v: {}, sins: {}, ex: {}, aura: 0 };
-  recalc(S);
-  save(S);
-  render();
+  recalc(S); save(S); render();
   toast('Today reset', true);
 }
 
